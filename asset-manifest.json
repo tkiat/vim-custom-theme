@@ -1,23 +1,20 @@
 {
   "files": {
-    "main.css": "/vim-custom-theme/static/css/main.8c8b27cf.chunk.css",
-    "main.js": "/vim-custom-theme/static/js/main.e24e330f.chunk.js",
-    "main.js.map": "/vim-custom-theme/static/js/main.e24e330f.chunk.js.map",
-    "runtime-main.js": "/vim-custom-theme/static/js/runtime-main.0a2479c0.js",
-    "runtime-main.js.map": "/vim-custom-theme/static/js/runtime-main.0a2479c0.js.map",
-    "static/js/2.50121eeb.chunk.js": "/vim-custom-theme/static/js/2.50121eeb.chunk.js",
-    "static/js/2.50121eeb.chunk.js.map": "/vim-custom-theme/static/js/2.50121eeb.chunk.js.map",
-    "static/js/3.b2725939.chunk.js": "/vim-custom-theme/static/js/3.b2725939.chunk.js",
-    "static/js/3.b2725939.chunk.js.map": "/vim-custom-theme/static/js/3.b2725939.chunk.js.map",
+    "main.css": "/vim-custom-theme/static/css/main.6dea0f05.chunk.css",
+    "main.js": "/vim-custom-theme/static/js/main.ea5a8431.chunk.js",
+    "main.js.map": "/vim-custom-theme/static/js/main.ea5a8431.chunk.js.map",
+    "runtime-main.js": "/vim-custom-theme/static/js/runtime-main.55f4b584.js",
+    "runtime-main.js.map": "/vim-custom-theme/static/js/runtime-main.55f4b584.js.map",
+    "static/js/2.2c9e3d4a.chunk.js": "/vim-custom-theme/static/js/2.2c9e3d4a.chunk.js",
+    "static/js/2.2c9e3d4a.chunk.js.map": "/vim-custom-theme/static/js/2.2c9e3d4a.chunk.js.map",
     "index.html": "/vim-custom-theme/index.html",
-    "static/css/main.8c8b27cf.chunk.css.map": "/vim-custom-theme/static/css/main.8c8b27cf.chunk.css.map",
-    "static/js/2.50121eeb.chunk.js.LICENSE.txt": "/vim-custom-theme/static/js/2.50121eeb.chunk.js.LICENSE.txt",
-    "static/media/logo.6ce24c58.svg": "/vim-custom-theme/static/media/logo.6ce24c58.svg"
+    "static/css/main.6dea0f05.chunk.css.map": "/vim-custom-theme/static/css/main.6dea0f05.chunk.css.map",
+    "static/js/2.2c9e3d4a.chunk.js.LICENSE.txt": "/vim-custom-theme/static/js/2.2c9e3d4a.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.0a2479c0.js",
-    "static/js/2.50121eeb.chunk.js",
-    "static/css/main.8c8b27cf.chunk.css",
-    "static/js/main.e24e330f.chunk.js"
+    "static/js/runtime-main.55f4b584.js",
+    "static/js/2.2c9e3d4a.chunk.js",
+    "static/css/main.6dea0f05.chunk.css",
+    "static/js/main.ea5a8431.chunk.js"
   ]
 }
