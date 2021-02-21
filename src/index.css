@@ -24,8 +24,7 @@ code {
   text-align: center;
   display: inline-block;
   padding: 2px;
-  /*background: orange;*/
-  /*color: white;*/
+  /*padding: 5px;*/
 }
 /*.square::after {*/
 /*  content: "211";*/
