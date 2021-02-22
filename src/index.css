@@ -12,7 +12,23 @@ code {
     monospace;
 }
 
-.square-container {
+.colorInput {
+  text-align: center;
+}
+.lefthalf {
+  display: inline-block;
+  width: 50%;
+  background-color: orange;
+}
+.righthalf {
+  display: inline-block;
+  width: 50%;
+  float: right;
+  background-color: black;
+}
+
+.colorgroup-container {
+  /*border: 1px solid black;*/
 }
 
 .square {
@@ -23,8 +39,7 @@ code {
   line-height: 20px;
   text-align: center;
   display: inline-block;
-  padding: 2px;
-  /*padding: 5px;*/
+  padding: 1px;
 }
 /*.square::after {*/
 /*  content: "211";*/
