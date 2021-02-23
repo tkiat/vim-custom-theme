@@ -12,27 +12,60 @@ code {
     monospace;
 }
 
-.colorInput {
+.color-palette {
+  position: absolute;
+  bottom: 0;
+  white-space: pre;
+  overflow-x: visible;
+}
+.color-input {
   text-align: center;
 }
 .lefthalf {
   display: inline-block;
-  width: 50%;
-  background-color: orange;
+  width: 400px;
+  border: 2px solid gray;
 }
 .righthalf {
-  display: inline-block;
-  width: 50%;
-  float: right;
+  position: absolute;
+  left: 400px;
+  top: 0;
+  width: 607px;
   background-color: black;
+  /*width: calc(70% - 26px);*/
+  /*float: right;*/
 }
-
-.colorgroup-container {
-  /*border: 1px solid black;*/
+.righthalf__code {
+  font-size: 14px;
+  line-height: 16px;
+  display: inline-block;
+  width: calc(100% - 34px);
+  margin: 0;
+  padding: 0;
+  vertical-align: top;
+  /*white-space: pre-wrap;*/
 }
-
+.righthalf__lineNumber {
+  font-size: 14px;
+  line-height: 16px;
+  display: inline-block;
+  width: 26px;
+  text-align: right;
+  padding-right: 8px;
+}
+.righthalf__tab {
+  background-color: white;
+  display: block;
+  margin: 0;
+}
+.righthalf__footer {
+  background-color: white;
+  display: block;
+  margin: 0;
+}
 .square {
-  border: 1px solid black;
+  border-right: 1px solid black;
+  border-top: 1px solid black;
   width: 20px;
   height: 20px;
   font-size: 12px;
@@ -41,7 +74,9 @@ code {
   display: inline-block;
   padding: 1px;
 }
-/*.square::after {*/
-/*  content: "211";*/
-/*  mix-blend-mode: difference;*/
-/*}*/
+.square.disable {
+  border: none;
+}
+.sample-code {
+  margin: 0;
+}
