@@ -51,8 +51,8 @@ class App extends Component {
   displaySampleCodeOneLine = (seq) => {
     return [
       seq.map(pair => {
-        let {bgCode, fgCode} = this.state['grp' + pair[0]]
-        if (typeof pair[0] === 'string' && pair[0].slice(-3) === 'rev') { let temp = bgCode; bgCode = fgCode; fgCode = temp }
+        let {bgCode, fgCode} = this.state['grp' + (typeof pair[0] === 'string' ? pair[0] : Math.abs(pair[0]))]
+        if (pair[0] < 0) { let temp = bgCode; bgCode = fgCode; fgCode = temp }
         bgCode = pair[2] ? this.state['grp' + pair[2]].bgCode : bgCode
         return <code style={{"backgroundColor": getHighlightColor(bgCode), "color": getHighlightColor(fgCode)}}>{pair[1]}</code>
       })
@@ -62,23 +62,25 @@ class App extends Component {
     return <code style={{"backgroundColor": getHighlightColor(isCursorThere ? this.state.grp9.bgCode : this.state.grp4.bgCode), "color": getHighlightColor(isCursorThere ? this.state.grp9.fgCode : this.state.grp4.fgCode)}}>{text}</code>
   }
 
-  displaySampleCode = (sample) => {
-    let cur = 0
+  displaySampleCode = (sample, autofillLineNr = true) => {
+    let curLineNr = 0
     const lastLineNr = Number(Object.keys(sample[sample.length - 1])[0])
     const secondLastLineNr = Number(Object.keys(sample[sample.length - 2])[0])
-    let numDigit = Math.ceil(sample.length / 10)
+    let numDigit = Math.ceil((lastLineNr + '').length)
     return <pre className='sample-code'>{
       sample.map(line => {
         const lineNr = Number(Object.keys(line)[0])
         const seq = Object.values(line)[0]
         let newlines = []
-        while(cur < lineNr) {
+        while(curLineNr < lineNr) {
           newlines.push(<br />)
-          let lineNumberText = '~'
-          if (cur < secondLastLineNr) lineNumberText = this.insertLineNumberSpaces(lineNr, numDigit)
-          else if (cur >= lastLineNr - 1) lineNumberText = ''
-          newlines.push(this.displayLineNumber(lineNumberText, seq.filter(x => x[0] === 'Cursor').length))
-          cur++
+          if (autofillLineNr) {
+            let lineNumberText = '~'
+            if (curLineNr >= lastLineNr - 2) lineNumberText = ''
+            else if (curLineNr === lineNr - 1) lineNumberText = this.insertLineNumberSpaces(curLineNr + 1, numDigit)
+            newlines.push(this.displayLineNumber(lineNumberText, seq.filter(x => x[0] === 'Cursor').length))
+          }
+          curLineNr++
         }
         return [
           newlines,
@@ -114,7 +116,7 @@ class App extends Component {
             <ColorGroup id="grp6" members={["Special"]} color={this.state.grp6} setColor={this.setColor} />
             <ColorGroup id="grp7" members={["Identifier", "Preproc"]} color={this.state.grp7} setColor={this.setColor} />
             <ColorGroup id="grp8" members={['ModeMsg', 'Normal', 'Question', 'TabLineFill', 'Title']} color={this.state.grp8} setColor={this.setColor} />
-            <ColorGroup id="grp9" members={["CursorLine", "CursorLineNr", "Folded"]} color={this.state.grp9} setColor={this.setColor} />
+            <ColorGroup id="grp9" members={["CursorLine", "CursorLineNr", "Folded", "FoldColumn"]} color={this.state.grp9} setColor={this.setColor} />
             <ColorGroup id="grp10" members={["Pmenu", "PmenuSbar", "StatusLine", "StatusLineTerm", "TablineSel", "Visual"]} color={this.state.grp10} setColor={this.setColor} />
             <ColorGroup id="grp11" members={["PmenuThumb", "PmenuSel", "StatusLineNC", "StatusLineTermNC", "TabLine"]} color={this.state.grp11} setColor={this.setColor} />
             <ColorGroup id="grp12" members={["DiffDelete", "Error", "ErrorMsg"]} color={this.state.grp12} setColor={this.setColor} />
@@ -126,7 +128,7 @@ class App extends Component {
         <div className='editor' style={{'backgroundColor': getHighlightColor(this.state.grp8.bgCode)}}>
 
           <div className='editor__code'>
-            {this.displaySampleCode(samples[this.state.sample])}
+            {this.displaySampleCode(samples[this.state.sample], this.state.sample === 'diff' ? false : true)}
           </div>
 
           <div className='editor__selector'>

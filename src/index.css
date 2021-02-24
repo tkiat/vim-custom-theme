@@ -30,6 +30,7 @@ code {
   text-align: right;
   border-top: 2px solid gray;
   padding-top: 50px;
+  z-index: -1;
 }
 .editor {
   position: absolute;
