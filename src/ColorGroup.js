@@ -30,7 +30,7 @@ class ColorGroup extends Component {
           </td>
         })}
         <td>
-          {this.props.members.map(x => <span key={"hl-" + x}> {x}</span>)}
+          {this.props.members.map((x, i) => <span key={"hl-" + x}>{i === 0 ? '' : ' - '}{x}</span>)}
         </td>
       </tr>
     )

@@ -12,59 +12,75 @@ code {
     monospace;
 }
 
-.color-palette {
-  position: absolute;
-  bottom: 0;
-  white-space: pre;
-  overflow-x: visible;
-}
 .color-input {
   text-align: center;
 }
-.lefthalf {
+.highlight-groups {
   display: inline-block;
-  width: 400px;
-  border: 2px solid gray;
+  width: 398px;
+  width: calc(100% - 641px);
 }
-.righthalf {
+.editor__palette {
+  width: 100%;
   position: absolute;
-  left: 400px;
+  right: 0px;
+  bottom: 0px;
+  white-space: pre;
+  overflow-x: visible;
+  text-align: right;
+  border-top: 2px solid gray;
+  padding-top: 50px;
+}
+.editor {
+  position: absolute;
+  text-align: right;
+  right: 0;
   top: 0;
   width: 607px;
-  background-color: black;
-  /*width: calc(70% - 26px);*/
-  /*float: right;*/
 }
-.righthalf__code {
+.editor__code {
+  text-align: left;
+  /*background-color: black;*/
   font-size: 14px;
   line-height: 16px;
   display: inline-block;
-  width: calc(100% - 34px);
+  width: 607px;
   margin: 0;
   padding: 0;
   vertical-align: top;
   /*white-space: pre-wrap;*/
 }
-.righthalf__lineNumber {
+.editor__footer {
+  text-align: left;
+  background-color: blue;
+  display: block;
+  margin: 0;
+}
+.editor__lineNumber {
   font-size: 14px;
   line-height: 16px;
   display: inline-block;
   width: 26px;
   text-align: right;
-  padding-right: 8px;
+  /*padding-right: 8px;*/
 }
-.righthalf__tab {
+.editor__selector {
+  padding-top: 10px;
+  text-align: center;
   background-color: white;
+}
+.editor__selector > button {
+  margin: 0 20px;
+}
+.editor__tab {
+  font-size: 14px;
+  text-align: left;
   display: block;
   margin: 0;
 }
-.righthalf__footer {
-  background-color: white;
-  display: block;
-  margin: 0;
-}
+
 .square {
-  border-right: 1px solid black;
+  border-left: 1px solid black;
   border-top: 1px solid black;
   width: 20px;
   height: 20px;
