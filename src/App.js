@@ -59,7 +59,9 @@ class App extends Component {
     ]}
 
   displayLineNumber = (text, isCursorThere) => {
-    return <code style={{"backgroundColor": getHighlightColor(isCursorThere ? this.state.grp9.bgCode : this.state.grp4.bgCode), "color": getHighlightColor(isCursorThere ? this.state.grp9.fgCode : this.state.grp4.fgCode)}}>{text}</code>
+    let groupColor = isCursorThere ? this.state.grp9 : this.state.grp4
+    if (text === '~') groupColor = this.state.grp3
+    return <code style={{"backgroundColor": getHighlightColor(groupColor.bgCode), "color": getHighlightColor(groupColor.fgCode)}}>{text}</code>
   }
 
   displaySampleCode = (sample, autofillLineNr = true) => {
@@ -116,13 +118,14 @@ class App extends Component {
             <ColorGroup id="grp6" members={["Special"]} color={this.state.grp6} setColor={this.setColor} />
             <ColorGroup id="grp7" members={["Identifier", "Preproc"]} color={this.state.grp7} setColor={this.setColor} />
             <ColorGroup id="grp8" members={['ModeMsg', 'Normal', 'Question', 'TabLineFill', 'Title']} color={this.state.grp8} setColor={this.setColor} />
-            <ColorGroup id="grp9" members={["CursorLine", "CursorLineNr", "Folded", "FoldColumn"]} color={this.state.grp9} setColor={this.setColor} />
+            <ColorGroup id="grp9" members={["CursorLine**", "CursorLineNr*", "Folded", "FoldColumn"]} color={this.state.grp9} setColor={this.setColor} />
             <ColorGroup id="grp10" members={["Pmenu", "PmenuSbar", "StatusLine", "StatusLineTerm", "TablineSel", "Visual"]} color={this.state.grp10} setColor={this.setColor} />
             <ColorGroup id="grp11" members={["PmenuThumb", "PmenuSel", "StatusLineNC", "StatusLineTermNC", "TabLine"]} color={this.state.grp11} setColor={this.setColor} />
             <ColorGroup id="grp12" members={["DiffDelete", "Error", "ErrorMsg"]} color={this.state.grp12} setColor={this.setColor} />
-            <ColorGroup id="grp13" members={["DiffAdd", "DiffChange", "IncSearch", "MatchParen", "Search"]} color={this.state.grp13} setColor={this.setColor} />
+            <ColorGroup id="grp13" members={["DiffAdd", "DiffChange", "IncSearch*", "MatchParen*", "Search"]} color={this.state.grp13} setColor={this.setColor} />
           </tbody>
-      TODO: change to vim license, tell 256 transparent
+      * bg fg reversed ** Tranparent Font Color
+      TODO: change to vim license, tell 256 transparent, add X top right
         </table>
 
         <div className='editor' style={{'backgroundColor': getHighlightColor(this.state.grp8.bgCode)}}>
