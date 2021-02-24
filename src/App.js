@@ -21,15 +21,17 @@ const themes = {
     grp11: {fgCode: 0, bgCode: 245},
     grp12: {fgCode: 15, bgCode: 9},
     grp13: {fgCode: 0, bgCode: 214},
-    grp14: {fgCode: 0, bgCode: 166},
   }
 }
 
     // grp15: {fgCode: 0, bgCode: 15}, // cursor
 class App extends Component {
 
-  initialState = {...themes.theme1, grpCursor: {fgCode: 0, bgCode: 15}, sample: 'pmenu', curLineNr: 11}
-  // initialState['cursor'] = {fgCode: 0, bgCode: 15}
+  initialState = {
+    ...themes.theme1,
+    grpCursor: {fgCode: 0, bgCode: 15},
+    sample: 'diff',
+  }
   state = this.initialState
 
   getPaletteSquares = (from, to = from + 17) => {
@@ -42,46 +44,44 @@ class App extends Component {
     return <Square backgroundcolor={'#fff'} fontcolor={'#fff'} value='x' borderDisable={true} />
   }
 
-  // draw text with highlights. Arguments: [pair1, pair2, ...]
-  // A pair is [<highlight group number>, <text>, <(optional) another group number, alternate background>]
-  drawHlLineOfTexts = (pairs) => {
-    return <pre className='sample-code'>{
-      pairs.map(pair => {
-        let {bgCode, fgCode} = this.state['grp' + pair[0]]
-        bgCode = pair[2] ? this.state['grp' + pair[2]].bgCode : bgCode
-        return <code style={{"backgroundColor": getHighlightColor(bgCode), "color": getHighlightColor(fgCode)}}>{pair[1]}</code>
-      })
-    }</pre>
-  }
-
   insertLineNumberSpaces = (num, numDigit) => (' ' + String(num).padStart(numDigit, ' ') + ' ')
 
+  // draw text with highlights. Arguments: [pair1, pair2, ...]
+  // A pair is [<highlight group number, append r for reverse highlighting>, <text>, <(optional) another group number, alternate background>]
   displaySampleCodeOneLine = (seq) => {
     return [
       seq.map(pair => {
         let {bgCode, fgCode} = this.state['grp' + pair[0]]
+        if (typeof pair[0] === 'string' && pair[0].slice(-3) === 'rev') { let temp = bgCode; bgCode = fgCode; fgCode = temp }
         bgCode = pair[2] ? this.state['grp' + pair[2]].bgCode : bgCode
         return <code style={{"backgroundColor": getHighlightColor(bgCode), "color": getHighlightColor(fgCode)}}>{pair[1]}</code>
       })
     ]}
 
-  displayLineNumber = (lineNr,numDigit) => {
-    return <code style={{"backgroundColor": getHighlightColor(this.state.grp4.bgCode), "color": getHighlightColor(this.state.grp4.fgCode)}}>{this.insertLineNumberSpaces(lineNr, numDigit)}</code>
+  displayLineNumber = (text, isCursorThere) => {
+    return <code style={{"backgroundColor": getHighlightColor(isCursorThere ? this.state.grp9.bgCode : this.state.grp4.bgCode), "color": getHighlightColor(isCursorThere ? this.state.grp9.fgCode : this.state.grp4.fgCode)}}>{text}</code>
   }
 
   displaySampleCode = (sample) => {
     let cur = 0
     const lastLineNr = Number(Object.keys(sample[sample.length - 1])[0])
+    const secondLastLineNr = Number(Object.keys(sample[sample.length - 2])[0])
     let numDigit = Math.ceil(sample.length / 10)
     return <pre className='sample-code'>{
       sample.map(line => {
         const lineNr = Number(Object.keys(line)[0])
         const seq = Object.values(line)[0]
         let newlines = []
-        while(cur < lineNr) { newlines.push(<br />); cur++ }
+        while(cur < lineNr) {
+          newlines.push(<br />)
+          let lineNumberText = '~'
+          if (cur < secondLastLineNr) lineNumberText = this.insertLineNumberSpaces(lineNr, numDigit)
+          else if (cur >= lastLineNr - 1) lineNumberText = ''
+          newlines.push(this.displayLineNumber(lineNumberText, seq.filter(x => x[0] === 'Cursor').length))
+          cur++
+        }
         return [
           newlines,
-          (lineNr > 0 && lineNr < lastLineNr) && this.displayLineNumber(lineNr, numDigit),
           this.displaySampleCodeOneLine(seq)
         ]
       })
@@ -124,37 +124,16 @@ class App extends Component {
         </table>
 
         <div className='editor' style={{'backgroundColor': getHighlightColor(this.state.grp8.bgCode)}}>
-      {/*
-          <code className='editor__tab' style={{'backgroundColor': getHighlightColor(this.state.grp8.bgCode)}}>
-            {this.drawHlLineOfTexts([[6,' 2',11],[11,' NERD_tree_1  s/Code.js '],[10, ' index.html '],[11, ' s/App.js '],[8,'                  ']])}
-          </code>
-
-          <div className='editor__lineNumber' style={{'backgroundColor': getHighlightColor(this.state.grp4.bgCode), 'color': getHighlightColor(this.state.grp4.fgCode)}}>
-            {Array(25).fill(0).map((_, i) => {
-              const lineNr = i + 1
-              console.log(lineNr == this.state.curLineNr)
-              const fgColor = (lineNr === this.state.curLineNr) ? getHighlightColor(this.state.grp9.fgCode) : 'inherit'
-              return <div key={'linenr' + lineNr} style={{'color': fgColor}}><code>{lineNr}</code></div>
-            })}
-          </div>
-      */}
 
           <div className='editor__code'>
             {this.displaySampleCode(samples[this.state.sample])}
           </div>
 
-      {/*
-          <code className='editor__footer' style={{'backgroundColor': getHighlightColor(this.state.grp8.bgCode)}}>
-            {this.drawHlLineOfTexts([[8,' "index.html" 16L, 355B written                                   ']])}
-          </code>
-      */}
-
           <div className='editor__selector'>
-            <button>NERDTree</button>
             <button onClick={() => this.setState({sample: 'pmenu'})}>Pmenu</button>
-            <button onClick={() => this.setState({sample: 'visual'})}>Visual</button>
-            <button>Search</button>
-            <button>Diff</button>
+            <button onClick={() => this.setState({sample: 'nerdtree_visual'})}>NERDTree & Visual</button>
+            <button onClick={() => this.setState({sample: 'fold_search'})}>Fold & Search</button>
+            <button onClick={() => this.setState({sample: 'diff'})}>Diff</button>
           </div>
         </div>
 
