@@ -18,18 +18,16 @@ code {
 .highlight-groups {
   display: inline-block;
   width: 398px;
-  width: calc(100% - 641px);
+  width: calc(100% - 700px);
 }
-.editor__palette {
+.color-palette {
   width: 100%;
   position: absolute;
   right: 0px;
   bottom: 0px;
   white-space: pre;
   overflow-x: visible;
-  text-align: right;
-  border-top: 2px solid gray;
-  padding-top: 50px;
+  text-align: left;
   z-index: -1;
 }
 .editor {
@@ -37,15 +35,14 @@ code {
   text-align: right;
   right: 0;
   top: 0;
-  width: 607px;
+  width: 694px;
 }
 .editor__code {
   text-align: left;
   /*background-color: black;*/
-  font-size: 14px;
-  line-height: 16px;
+  font-size: 16px;
+  /*line-height: 16px;*/
   display: inline-block;
-  width: 607px;
   margin: 0;
   padding: 0;
   vertical-align: top;
@@ -65,13 +62,30 @@ code {
   text-align: right;
   /*padding-right: 8px;*/
 }
-.editor__selector {
-  padding-top: 10px;
-  text-align: center;
-  background-color: white;
+.sample-download {
+  text-align: left;
 }
-.editor__selector > button {
-  margin: 0 20px;
+.sample-download__input {
+  text-align: right;
+}
+.sample-selector {
+  text-align: left;
+}
+.sample-selector__button {
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  margin-right: 2px;
+  padding: 10px;
+  background: lightgrey;
+  color: black;
+}
+.sample-selector__button--active {
+  background: gray;
+  color: white;
+}
+.sample-selector__download {
+  margin-left: 10px;
 }
 .editor__tab {
   font-size: 14px;
@@ -81,7 +95,7 @@ code {
 }
 
 .square {
-  border-left: 1px solid black;
+  border-right: 1px solid black;
   border-top: 1px solid black;
   width: 20px;
   height: 20px;

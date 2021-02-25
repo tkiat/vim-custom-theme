@@ -1,6 +1,6 @@
 import {Component} from 'react'
 
-import CodeSample from './CodeSample.js'
+import ColorTemplate from './VimColorTemplate.js'
 import ColorGroup from './ColorGroup.js'
 import Square from './Square.js'
 
@@ -24,13 +24,12 @@ const themes = {
   }
 }
 
-    // grp15: {fgCode: 0, bgCode: 15}, // cursor
 class App extends Component {
 
   initialState = {
     ...themes.theme1,
     grpCursor: {fgCode: 0, bgCode: 15},
-    sample: 'diff',
+    activeSample: 'pmenu',
   }
   state = this.initialState
 
@@ -118,43 +117,63 @@ class App extends Component {
             <ColorGroup id="grp6" members={["Special"]} color={this.state.grp6} setColor={this.setColor} />
             <ColorGroup id="grp7" members={["Identifier", "Preproc"]} color={this.state.grp7} setColor={this.setColor} />
             <ColorGroup id="grp8" members={['ModeMsg', 'Normal', 'Question', 'TabLineFill', 'Title']} color={this.state.grp8} setColor={this.setColor} />
-            <ColorGroup id="grp9" members={["CursorLine**", "CursorLineNr*", "Folded", "FoldColumn"]} color={this.state.grp9} setColor={this.setColor} />
+            <ColorGroup id="grp9" members={["CursorLine **", "CursorLineNr *", "Folded", "FoldColumn"]} color={this.state.grp9} setColor={this.setColor} />
             <ColorGroup id="grp10" members={["Pmenu", "PmenuSbar", "StatusLine", "StatusLineTerm", "TablineSel", "Visual"]} color={this.state.grp10} setColor={this.setColor} />
             <ColorGroup id="grp11" members={["PmenuThumb", "PmenuSel", "StatusLineNC", "StatusLineTermNC", "TabLine"]} color={this.state.grp11} setColor={this.setColor} />
             <ColorGroup id="grp12" members={["DiffDelete", "Error", "ErrorMsg"]} color={this.state.grp12} setColor={this.setColor} />
-            <ColorGroup id="grp13" members={["DiffAdd", "DiffChange", "IncSearch*", "MatchParen*", "Search"]} color={this.state.grp13} setColor={this.setColor} />
+            <ColorGroup id="grp13" members={["DiffAdd", "DiffChange", "IncSearch *", "MatchParen *", "Search"]} color={this.state.grp13} setColor={this.setColor} />
+            <tr>
+              <td></td>
+              <td></td>
+              <td><b>* Reversed Font and BG Colors</b></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td><b>** Transparent Font Color</b></td>
+            </tr>
           </tbody>
-      * bg fg reversed ** Tranparent Font Color
-      TODO: change to vim license, tell 256 transparent, add X top right
         </table>
 
-        <div className='editor' style={{'backgroundColor': getHighlightColor(this.state.grp8.bgCode)}}>
+        <div className='editor'>
 
-          <div className='editor__code'>
-            {this.displaySampleCode(samples[this.state.sample], this.state.sample === 'diff' ? false : true)}
+          <div className='editor__code' style={{'backgroundColor': getHighlightColor(this.state.grp8.bgCode)}}>
+            {this.displaySampleCode(samples[this.state.activeSample], this.state.activeSample === 'diff_error' ? false : true)}
           </div>
 
-          <div className='editor__selector'>
-            <button onClick={() => this.setState({sample: 'pmenu'})}>Pmenu</button>
-            <button onClick={() => this.setState({sample: 'nerdtree_visual'})}>NERDTree & Visual</button>
-            <button onClick={() => this.setState({sample: 'fold_search'})}>Fold & Search</button>
-            <button onClick={() => this.setState({sample: 'diff'})}>Diff</button>
+          <div className='sample-selector'>
+            {
+              ['pmenu','nerdtree_visual','fold_search','diff_error'].map(x => {
+                return <button className={'sample-selector__button' + (this.state.activeSample === x ? ' sample-selector__button--active' : '')} onClick={() => this.setState({activeSample: x})}>{x}</button>
+              })
+            }
+          </div>
+
+          <div className='sample-download'>
+            <label for="filename">Filename </label>
+            <input className='sample-download__input' type="text" name="filename" value="custom" size="16" />
+            <label for="filename">.vim</label>
+            <a className='sample-selector__download' href={'data:text/plain;charset=utf-8,' + encodeURIComponent(ColorTemplate(this.state))} download='custom.vim'>Download</a>
           </div>
         </div>
 
-
-        <div className='editor__palette'>
-          <div>{this.getPaletteSquares(0, 15)}</div>
+        <div className='color-palette'>
           <div>{this.getPaletteSquares(16, 51)}</div>
           <div>{this.getPaletteSquares(52, 87)}</div>
           <div>{this.getPaletteSquares(88, 123)}</div>
           <div>{this.getPaletteSquares(124, 159)}</div>
           <div>{this.getPaletteSquares(160, 195)}</div>
           <div>{this.getPaletteSquares(196, 231)}</div>
-          <div>{this.getPaletteSquares(232, 255)}</div>
+          <div>{this.getPaletteSquares(232, 255)}{this.getPaletteSquares(0, 15)}</div>
         </div>
       </div>
     )
   }
 }
+
+//             <button className={'sample-selector__button' + (this.state.activeSample === 'pmenu' ? ' sample-selector__button--active' : '')} onClick={() => this.setState({activeSample: 'pmenu'})}>Pmenu</button>
+//             <button className={'sample-selector__button' + (this.state.activeSample === 'nerdtree_visual' ? ' sample-selector__button--active' : '')} onClick={() => this.setState({activeSample: 'nerdtree_visual'})}>NERDTree & Visual</button>
+//             <button className={'sample-selector__button' + (this.state.activeSample === 'fold_search' ? ' sample-selector__button--active' : '')} onClick={() => this.setState({activeSample: 'fold_search'})}>Fold & Search</button>
+//             <button className={'sample-selector__button' + (this.state.activeSample === 'diff_error' ? ' sample-selector__button--active' : '')} onClick={() => this.setState({activeSample: 'diff_error'})}>Diff & Error</button>
+//             <a className='sample-selector__download' href={'data:text/plain;charset=utf-8,' + encodeURIComponent('text')} download='custom.vim'>Download</a>
 export default App
