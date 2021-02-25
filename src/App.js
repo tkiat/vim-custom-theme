@@ -30,6 +30,7 @@ class App extends Component {
     ...themes.theme1,
     grpCursor: {fgCode: 0, bgCode: 15},
     activeSample: 'pmenu',
+    filename: 'custom'
   }
   state = this.initialState
 
@@ -49,18 +50,18 @@ class App extends Component {
   // A pair is [<highlight group number, append r for reverse highlighting>, <text>, <(optional) another group number, alternate background>]
   displaySampleCodeOneLine = (seq) => {
     return [
-      seq.map(pair => {
+      seq.map((pair, i) => {
         let {bgCode, fgCode} = this.state['grp' + (typeof pair[0] === 'string' ? pair[0] : Math.abs(pair[0]))]
         if (pair[0] < 0) { let temp = bgCode; bgCode = fgCode; fgCode = temp }
         bgCode = pair[2] ? this.state['grp' + pair[2]].bgCode : bgCode
-        return <code style={{"backgroundColor": getHighlightColor(bgCode), "color": getHighlightColor(fgCode)}}>{pair[1]}</code>
+        return <code key={i} style={{"backgroundColor": getHighlightColor(bgCode), "color": getHighlightColor(fgCode)}}>{pair[1]}</code>
       })
     ]}
 
-  displayLineNumber = (text, isCursorThere) => {
+  displayLineNumber = (text, key, isCursorThere) => {
     let groupColor = isCursorThere ? this.state.grp9 : this.state.grp4
     if (text === '~') groupColor = this.state.grp3
-    return <code style={{"backgroundColor": getHighlightColor(groupColor.bgCode), "color": getHighlightColor(groupColor.fgCode)}}>{text}</code>
+    return <code key={key} style={{"backgroundColor": getHighlightColor(groupColor.bgCode), "color": getHighlightColor(groupColor.fgCode)}}>{text}</code>
   }
 
   displaySampleCode = (sample, autofillLineNr = true) => {
@@ -74,12 +75,12 @@ class App extends Component {
         const seq = Object.values(line)[0]
         let newlines = []
         while(curLineNr < lineNr) {
-          newlines.push(<br />)
+          newlines.push(<br key={'br' + curLineNr} />)
           if (autofillLineNr) {
             let lineNumberText = '~'
             if (curLineNr >= lastLineNr - 2) lineNumberText = ''
             else if (curLineNr === lineNr - 1) lineNumberText = this.insertLineNumberSpaces(curLineNr + 1, numDigit)
-            newlines.push(this.displayLineNumber(lineNumberText, seq.filter(x => x[0] === 'Cursor').length))
+            newlines.push(this.displayLineNumber(lineNumberText, 'lineNr' + curLineNr, seq.filter(x => x[0] === 'Cursor').length))
           }
           curLineNr++
         }
@@ -125,12 +126,12 @@ class App extends Component {
             <tr>
               <td></td>
               <td></td>
-              <td><b>* Reversed Font and BG Colors</b></td>
+              <td><b>256 = Transparent // TODO theme</b></td>
             </tr>
             <tr>
               <td></td>
               <td></td>
-              <td><b>** Transparent Font Color</b></td>
+              <td><b>* Reversed Font and BG Colors  ** Transparent Font Color</b></td>
             </tr>
           </tbody>
         </table>
@@ -143,17 +144,17 @@ class App extends Component {
 
           <div className='sample-selector'>
             {
-              ['pmenu','nerdtree_visual','fold_search','diff_error'].map(x => {
-                return <button className={'sample-selector__button' + (this.state.activeSample === x ? ' sample-selector__button--active' : '')} onClick={() => this.setState({activeSample: x})}>{x}</button>
+              ['pmenu','nerdtree_visual','fold_search','diff_error'].map((x, i) => {
+                return <button key={i} className={'sample-selector__button' + (this.state.activeSample === x ? ' sample-selector__button--active' : '')} onClick={() => this.setState({activeSample: x})}>{x}</button>
               })
             }
-          </div>
 
-          <div className='sample-download'>
-            <label for="filename">Filename </label>
-            <input className='sample-download__input' type="text" name="filename" value="custom" size="16" />
-            <label for="filename">.vim</label>
-            <a className='sample-selector__download' href={'data:text/plain;charset=utf-8,' + encodeURIComponent(ColorTemplate(this.state))} download='custom.vim'>Download</a>
+            <input className='sample-download__input' type="text" name="filename" value={this.state.filename} size="12" 
+              onChange={e => {
+                this.setState({filename: e.target.value})
+              }}/>
+            <label htmlFor="filename">.vim</label>
+            <a className='sample-selector__download' href={'data:text/plain;charset=utf-8,' + encodeURIComponent(ColorTemplate(this.state))} download={this.state.filename + '.vim'}>Download</a>
           </div>
         </div>
 
@@ -166,14 +167,17 @@ class App extends Component {
           <div>{this.getPaletteSquares(196, 231)}</div>
           <div>{this.getPaletteSquares(232, 255)}{this.getPaletteSquares(0, 15)}</div>
         </div>
+
+        <div className='logo'>
+          <p className='logo__title'><a href="https://github.com/tkiat/vim-custom-theme"><b>VIM Custom Theme</b></a></p>
+          <p className='logo__content'>A simple, opinionated tool to generate</p>
+          <p className='logo__content'>a custom theme with real-time changes.</p>
+          <p className='logo__content'>Currently support only console 256 colors.</p>
+          <p className='logo__footer' style={{'color': 'blue'}}><a href="https://reactjs.org/"><b><u>Made with React.js</u></b></a></p>
+        </div>
       </div>
     )
   }
 }
 
-//             <button className={'sample-selector__button' + (this.state.activeSample === 'pmenu' ? ' sample-selector__button--active' : '')} onClick={() => this.setState({activeSample: 'pmenu'})}>Pmenu</button>
-//             <button className={'sample-selector__button' + (this.state.activeSample === 'nerdtree_visual' ? ' sample-selector__button--active' : '')} onClick={() => this.setState({activeSample: 'nerdtree_visual'})}>NERDTree & Visual</button>
-//             <button className={'sample-selector__button' + (this.state.activeSample === 'fold_search' ? ' sample-selector__button--active' : '')} onClick={() => this.setState({activeSample: 'fold_search'})}>Fold & Search</button>
-//             <button className={'sample-selector__button' + (this.state.activeSample === 'diff_error' ? ' sample-selector__button--active' : '')} onClick={() => this.setState({activeSample: 'diff_error'})}>Diff & Error</button>
-//             <a className='sample-selector__download' href={'data:text/plain;charset=utf-8,' + encodeURIComponent('text')} download='custom.vim'>Download</a>
 export default App

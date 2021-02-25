@@ -11,15 +11,6 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-
-.color-input {
-  text-align: center;
-}
-.highlight-groups {
-  display: inline-block;
-  width: 398px;
-  width: calc(100% - 700px);
-}
 .color-palette {
   width: 100%;
   position: absolute;
@@ -29,6 +20,7 @@ code {
   overflow-x: visible;
   text-align: left;
   z-index: -1;
+  pointer-events: none;
 }
 .editor {
   position: absolute;
@@ -62,10 +54,40 @@ code {
   text-align: right;
   /*padding-right: 8px;*/
 }
+.highlight-groups {
+  display: inline-block;
+  width: 398px;
+  width: calc(100% - 700px);
+  /*background-color: orange;*/
+  border-spacing: 0;
+}
+.highlight-groups__input {
+  text-align: center;
+  width: 26px;
+  height: 24px;
+}
+.highlight-groups__row:nth-child(even) > .highlight-groups__dscp {
+  background-color: #dddddd;
+}
+.logo {
+  position: absolute;
+  right: 20px;
+  bottom: 0;
+  text-align: right;
+  z-index: -2;
+}
+.logo__title {
+  font-size: 20px;
+}
+.logo__content {
+  font-size: 16px;
+  line-height: 8px;
+}
 .sample-download {
   text-align: left;
 }
 .sample-download__input {
+  margin-left: 12px;
   text-align: right;
 }
 .sample-selector {
@@ -81,7 +103,7 @@ code {
   color: black;
 }
 .sample-selector__button--active {
-  background: gray;
+  background: #444;
   color: white;
 }
 .sample-selector__download {

@@ -47,7 +47,7 @@ export const samples = {
     {25: [[8,'/const                                        ']]}, //TODO
   ],
   'nerdtree_visual': [
-    { 0: [[10,' NERD_tree_1 '],[11, ' s/Code.js index.html  s/App.js '],[8,'                         '],[11,'X']]},
+    { 0: [[10,' NERD_tree_1 '],[11, ' s/Code.js index.html  s/App.js '],[8,'                          '],[11,'X']]},
     { 1: [[1,'" Press ? for help'],[3,'$']]},
     { 2: [[3,'$']]},
     { 3: [[1,'.. (up a dir)'],[3,'$']]},

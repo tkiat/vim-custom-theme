@@ -17,19 +17,19 @@ class ColorGroup extends Component {
 
   render() {
     return (
-      <tr>
+      <tr className='highlight-groups__row'>
         {Object.keys(this.props.color).map(x => {
           return <td key={"input-" + x}>
             <input
-              className='color-input'
+              className='highlight-groups__input'
               type="text"
               value={this.props.color[x]}
               name={x}
-              style={{'backgroundColor': getHighlightColor(this.props.color[x]), 'color': getLabelColor(this.props.color[x]), width: '26px', height: '26px'}}
+              style={{'backgroundColor': getHighlightColor(this.props.color[x]), 'color': getLabelColor(this.props.color[x])}}
               onChange={this.handleChange} />
           </td>
         })}
-        <td>
+        <td className='highlight-groups__dscp'>
           {this.props.members.map((x, i) => <span key={"hl-" + x}>{i === 0 ? '' : ' - '}{x}</span>)}
         </td>
       </tr>

@@ -5,7 +5,8 @@ const ConvCode = (code) => {
 }
 // const ColorTemplate = () => ReactDOMServer.renderToString(noob())
 const ColorTemplate = (theme) => (
-`" ========================================
+`" Source: https://github.com/tkiat/vim-custom-theme
+" ========================================
 "                                  General
 " ========================================
 let g:colors_name = "custom"
