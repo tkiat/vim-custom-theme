@@ -1,3 +1,26 @@
+export const themes = {
+  defaultDark: {
+    theme: 'defaultDark', background: 'dark',
+    grp1: {fgCode: 214, bgCode: 256}, grp2: {fgCode: 149, bgCode: 256},
+    grp3: {fgCode: 67, bgCode: 256}, grp4: {fgCode: 245, bgCode: 256},
+    grp5: {fgCode: 123, bgCode: 256}, grp6: {fgCode: 205, bgCode: 256},
+    grp7: {fgCode: 75, bgCode: 256}, grp8: {fgCode: 15, bgCode: 233},
+    grp9: {fgCode: 245, bgCode: 236}, grp10: {fgCode: 0, bgCode: 252},
+    grp11: {fgCode: 0, bgCode: 245}, grp12: {fgCode: 15, bgCode: 9},
+    grp13: {fgCode: 0, bgCode: 214},
+  },
+  defaultLight: {
+    theme: 'defaultLight', background: 'light',
+    grp1: {fgCode: 94, bgCode: 256}, grp2: {fgCode: 124, bgCode: 256},
+    grp3: {fgCode: 133, bgCode: 256}, grp4: {fgCode: 240, bgCode: 256},
+    grp5: {fgCode: 28, bgCode: 256}, grp6: {fgCode: 128, bgCode: 256},
+    grp7: {fgCode: 12, bgCode: 256}, grp8: {fgCode: 237, bgCode: 230},
+    grp9: {fgCode: 233, bgCode: 255}, grp10: {fgCode: 0, bgCode: 245},
+    grp11: {fgCode: 0, bgCode: 252}, grp12: {fgCode: 253, bgCode: 160},
+    grp13: {fgCode: 234, bgCode: 87},
+  }
+}
+
 export const samples = {
   'diff_error': [
     { 0: [[11,' index.html '],[10, ' '],[8,'2'],[10, ' Story1 '],[11, ' s/App.js '],[8,'                                       '],[11,'X']]},

@@ -12,7 +12,7 @@ const ColorTemplate = (theme) => (
 let g:colors_name = "custom"
 
 set t_Co=256
-set background=dark
+set background=${theme.background}
 
 highlight clear
 " ========================================

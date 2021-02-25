@@ -4,33 +4,17 @@ import ColorTemplate from './VimColorTemplate.js'
 import ColorGroup from './ColorGroup.js'
 import Square from './Square.js'
 
-import {getHighlightColor, getLabelColor, samples} from './constants.js'
-
-const themes = {
-  theme1: {
-    grp1: {fgCode: 214, bgCode: 256},
-    grp2: {fgCode: 149, bgCode: 256},
-    grp3: {fgCode: 67, bgCode: 256},
-    grp4: {fgCode: 245, bgCode: 256},
-    grp5: {fgCode: 123, bgCode: 256},
-    grp6: {fgCode: 205, bgCode: 256},
-    grp7: {fgCode: 75, bgCode: 256},
-    grp8: {fgCode: 15, bgCode: 233},
-    grp9: {fgCode: 245, bgCode: 236},
-    grp10: {fgCode: 0, bgCode: 252},
-    grp11: {fgCode: 0, bgCode: 245},
-    grp12: {fgCode: 15, bgCode: 9},
-    grp13: {fgCode: 0, bgCode: 214},
-  }
-}
+import {getHighlightColor, getLabelColor, samples, themes} from './constants.js'
 
 class App extends Component {
 
+  defaultTheme = 'defaultDark'
+
   initialState = {
-    ...themes.theme1,
+    ...themes[this.defaultTheme],
     grpCursor: {fgCode: 0, bgCode: 15},
     activeSample: 'pmenu',
-    filename: 'custom'
+    filename: 'custom',
   }
   state = this.initialState
 
@@ -126,7 +110,7 @@ class App extends Component {
             <tr>
               <td></td>
               <td></td>
-              <td><b>256 = Transparent // TODO theme</b></td>
+              <td><b>256 = Transparent</b></td>
             </tr>
             <tr>
               <td></td>
@@ -145,15 +129,25 @@ class App extends Component {
           <div className='sample-selector'>
             {
               ['pmenu','nerdtree_visual','fold_search','diff_error'].map((x, i) => {
-                return <button key={i} className={'sample-selector__button' + (this.state.activeSample === x ? ' sample-selector__button--active' : '')} onClick={() => this.setState({activeSample: x})}>{x}</button>
+                return <button key={i} className={'sample-selector__button' + (this.state.activeSample === x ? ' sample-selector__button--active' : '')} onClick={() => this.setState({activeSample: x})}>{['Pmenu','NERDTree & Visual', 'Fold & Search', 'Diff & Error'][i]}</button>
               })
             }
+          </div>
 
-            <input className='sample-download__input' type="text" name="filename" value={this.state.filename} size="12" 
+          <div className='sample-setting'>
+
+            <label htmlFor="theme">Theme: </label>
+            <select className='sample-setting__theme' name="theme" value={this.state.theme} onChange={e => {this.setState(themes[e.target.value])}}>
+              <option value="defaultDark">DefaultDark</option>
+              <option value="defaultLight">DefaultLight</option>
+            </select>
+
+            <input className='sample-setting__input' type="text" name="filename" value={this.state.filename} size="12"
               onChange={e => {
                 this.setState({filename: e.target.value})
               }}/>
             <label htmlFor="filename">.vim</label>
+
             <a className='sample-selector__download' href={'data:text/plain;charset=utf-8,' + encodeURIComponent(ColorTemplate(this.state))} download={this.state.filename + '.vim'}>Download</a>
           </div>
         </div>
@@ -169,11 +163,11 @@ class App extends Component {
         </div>
 
         <div className='logo'>
-          <p className='logo__title'><a href="https://github.com/tkiat/vim-custom-theme"><b>VIM Custom Theme</b></a></p>
+          <p className='logo__title'><a href="https://github.com/tkiat/vim-custom-theme"><b>Vim Custom Theme</b></a></p>
           <p className='logo__content'>A simple, opinionated tool to generate</p>
           <p className='logo__content'>a custom theme with real-time changes.</p>
           <p className='logo__content'>Currently support only console 256 colors.</p>
-          <p className='logo__footer' style={{'color': 'blue'}}><a href="https://reactjs.org/"><b><u>Made with React.js</u></b></a></p>
+          <p className='logo__footer' style={{'color': 'blue'}}><a href="https://reactjs.org/"><b>Made with React.js</b></a></p>
         </div>
       </div>
     )
