@@ -1,13 +1,4 @@
-import ReactDOMServer from 'react-dom/server'
-
 import {getHighlightColor} from './constants.js'
-
-const ConvCodeConsole = (code) => {
-  return (code === 256 ? 'NONE' : code)
-}
-const ConvCodeGUI = (code) => {
-  return (code === 256 ? 'NONE' : getHighlightColor(code))
-}
 
 const Config = (fgCode, bgCode, cterm='NONE', gui='NONE') => {
   return `ctermfg=${fgCode === 256 ? 'NONE' : fgCode} ctermbg=${bgCode === 256 ? 'NONE' : bgCode} cterm=${cterm} guifg=${fgCode === 256 ? 'NONE' : getHighlightColor(fgCode)} guibg=${bgCode === 256 ? 'NONE' : getHighlightColor(bgCode)} gui=${gui}`
