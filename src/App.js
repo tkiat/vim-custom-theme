@@ -110,7 +110,29 @@ class App extends Component {
             <tr>
               <td></td>
               <td></td>
-              <td><b>256 = Transparent</b></td>
+              <td>
+                <div className='sample-setting'>
+
+                  <label htmlFor="theme">Theme: </label>
+                  <select className='sample-setting__theme' name="theme" value={this.state.theme} onChange={e => {this.setState(themes[e.target.value])}}>
+                    <option value="defaultDark">DefaultDark</option>
+                    <option value="defaultLight">DefaultLight</option>
+                  </select>
+
+                  <input className='sample-setting__input' type="text" name="filename" value={this.state.filename} size="12"
+                    onChange={e => {
+                      this.setState({filename: e.target.value})
+                    }}/>
+                  <label htmlFor="filename">.vim</label>
+
+                  <a className='sample-selector__download' href={'data:text/plain;charset=utf-8,' + encodeURIComponent(ColorTemplate(this.state))} download={this.state.filename + '.vim'}>Download</a>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td><b>Note: 256 = Transparent.</b></td>
             </tr>
             <tr>
               <td></td>
@@ -120,9 +142,9 @@ class App extends Component {
           </tbody>
         </table>
 
-        <div className='editor'>
+        <div className='sample'>
 
-          <div className='editor__code' style={{'backgroundColor': getHighlightColor(this.state.grp8.bgCode)}}>
+          <div className='sample-code' style={{'backgroundColor': getHighlightColor(this.state.grp8.bgCode)}}>
             {this.displaySampleCode(samples[this.state.activeSample], this.state.activeSample === 'diff_error' ? false : true)}
           </div>
 
@@ -134,22 +156,6 @@ class App extends Component {
             }
           </div>
 
-          <div className='sample-setting'>
-
-            <label htmlFor="theme">Theme: </label>
-            <select className='sample-setting__theme' name="theme" value={this.state.theme} onChange={e => {this.setState(themes[e.target.value])}}>
-              <option value="defaultDark">DefaultDark</option>
-              <option value="defaultLight">DefaultLight</option>
-            </select>
-
-            <input className='sample-setting__input' type="text" name="filename" value={this.state.filename} size="12"
-              onChange={e => {
-                this.setState({filename: e.target.value})
-              }}/>
-            <label htmlFor="filename">.vim</label>
-
-            <a className='sample-selector__download' href={'data:text/plain;charset=utf-8,' + encodeURIComponent(ColorTemplate(this.state))} download={this.state.filename + '.vim'}>Download</a>
-          </div>
         </div>
 
         <div className='color-palette'>
@@ -166,7 +172,7 @@ class App extends Component {
           <p className='logo__title'><a href="https://github.com/tkiat/vim-custom-theme"><b>Vim Custom Theme</b></a></p>
           <p className='logo__content'>A simple, opinionated tool to generate</p>
           <p className='logo__content'>a custom theme with real-time changes.</p>
-          <p className='logo__content'>Currently support only console 256 colors.</p>
+          <p className='logo__content'>Currently support only 256 colors.</p>
           <p className='logo__footer' style={{'color': 'blue'}}><a href="https://reactjs.org/"><b>Made with React.js</b></a></p>
         </div>
       </div>

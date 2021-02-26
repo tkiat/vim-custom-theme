@@ -1,9 +1,18 @@
 import ReactDOMServer from 'react-dom/server'
 
-const ConvCode = (code) => {
+import {getHighlightColor} from './constants.js'
+
+const ConvCodeConsole = (code) => {
   return (code === 256 ? 'NONE' : code)
 }
-// const ColorTemplate = () => ReactDOMServer.renderToString(noob())
+const ConvCodeGUI = (code) => {
+  return (code === 256 ? 'NONE' : getHighlightColor(code))
+}
+
+const Config = (fgCode, bgCode, cterm='NONE', gui='NONE') => {
+  return `ctermfg=${fgCode === 256 ? 'NONE' : fgCode} ctermbg=${bgCode === 256 ? 'NONE' : bgCode} cterm=${cterm} guifg=${fgCode === 256 ? 'NONE' : getHighlightColor(fgCode)} guibg=${bgCode === 256 ? 'NONE' : getHighlightColor(bgCode)} gui=${gui}`
+}
+
 const ColorTemplate = (theme) => (
 `" Source: https://github.com/tkiat/vim-custom-theme
 " ========================================
@@ -19,59 +28,59 @@ highlight clear
 "                                Highlight
 " ========================================
 " grp1 fg
-hi Directory        ctermfg=${ConvCode(theme.grp1.fgCode)} ctermbg=${ConvCode(theme.grp1.bgCode)} cterm=NONE
-hi Constant         ctermfg=${ConvCode(theme.grp1.fgCode)} ctermbg=${ConvCode(theme.grp1.bgCode)} cterm=NONE
+hi Directory        ${Config(theme.grp1.fgCode, theme.grp1.bgCode)}
+hi Constant         ${Config(theme.grp1.fgCode, theme.grp1.bgCode)}
 " grp2
-hi Statement        ctermfg=${ConvCode(theme.grp2.fgCode)} ctermbg=${ConvCode(theme.grp2.bgCode)} cterm=NONE
+hi Statement        ${Config(theme.grp2.fgCode, theme.grp2.bgCode)}
 " grp3
-hi Nontext          ctermfg=${ConvCode(theme.grp3.fgCode)} ctermbg=${ConvCode(theme.grp3.bgCode)} cterm=NONE
-hi Specialkey       ctermfg=${ConvCode(theme.grp3.fgCode)} ctermbg=${ConvCode(theme.grp3.bgCode)} cterm=NONE
+hi Nontext          ${Config(theme.grp3.fgCode, theme.grp3.bgCode)}
+hi Specialkey       ${Config(theme.grp3.fgCode, theme.grp3.bgCode)}
 " grp4
-hi Comment          ctermfg=${ConvCode(theme.grp4.fgCode)} ctermbg=${ConvCode(theme.grp4.bgCode)} cterm=NONE
-hi LineNr           ctermfg=${ConvCode(theme.grp4.fgCode)} ctermbg=${ConvCode(theme.grp4.bgCode)} cterm=NONE
+hi Comment          ${Config(theme.grp4.fgCode, theme.grp4.bgCode)}
+hi LineNr           ${Config(theme.grp4.fgCode, theme.grp4.bgCode)}
 " grp5
-hi Type             ctermfg=${ConvCode(theme.grp5.fgCode)} ctermbg=${ConvCode(theme.grp5.bgCode)} cterm=NONE
+hi Type             ${Config(theme.grp5.fgCode, theme.grp5.bgCode)}
 " grp6
-hi Special          ctermfg=${ConvCode(theme.grp6.fgCode)} ctermbg=${ConvCode(theme.grp6.bgCode)} cterm=NONE
+hi Special          ${Config(theme.grp6.fgCode, theme.grp6.bgCode)}
 " grp7
-hi Identifier       ctermfg=${ConvCode(theme.grp7.fgCode)} ctermbg=${ConvCode(theme.grp7.bgCode)} cterm=NONE
-hi Preproc          ctermfg=${ConvCode(theme.grp7.fgCode)} ctermbg=${ConvCode(theme.grp7.bgCode)} cterm=NONE
+hi Identifier       ${Config(theme.grp7.fgCode, theme.grp7.bgCode)}
+hi Preproc          ${Config(theme.grp7.fgCode, theme.grp7.bgCode)}
 " grp8
-hi Normal           ctermfg=${ConvCode(theme.grp8.fgCode)} ctermbg=${ConvCode(theme.grp8.bgCode)} cterm=NONE
-hi ModeMsg          ctermfg=${ConvCode(theme.grp8.fgCode)} ctermbg=${ConvCode(theme.grp8.bgCode)} cterm=NONE
-hi Question         ctermfg=${ConvCode(theme.grp8.fgCode)} ctermbg=${ConvCode(theme.grp8.bgCode)} cterm=NONE
-hi TabLineFill      ctermfg=${ConvCode(theme.grp8.fgCode)} ctermbg=${ConvCode(theme.grp8.bgCode)} cterm=NONE
-hi Title            ctermfg=${ConvCode(theme.grp8.fgCode)} ctermbg=${ConvCode(theme.grp8.bgCode)} cterm=NONE
+hi Normal           ${Config(theme.grp8.fgCode, theme.grp8.bgCode)}
+hi ModeMsg          ${Config(theme.grp8.fgCode, theme.grp8.bgCode)}
+hi Question         ${Config(theme.grp8.fgCode, theme.grp8.bgCode)}
+hi TabLineFill      ${Config(theme.grp8.fgCode, theme.grp8.bgCode)}
+hi Title            ${Config(theme.grp8.fgCode, theme.grp8.bgCode)}
 " grp9
-hi Folded           ctermfg=${ConvCode(theme.grp9.fgCode)} ctermbg=${ConvCode(theme.grp9.bgCode)} cterm=NONE
-hi FoldColumn       ctermfg=${ConvCode(theme.grp9.fgCode)} ctermbg=${ConvCode(theme.grp9.bgCode)} cterm=NONE
+hi Folded           ${Config(theme.grp9.fgCode, theme.grp9.bgCode)}
+hi FoldColumn       ${Config(theme.grp9.fgCode, theme.grp9.bgCode)}
 
-hi CursorLine       ctermfg=NONE ctermbg=${ConvCode(theme.grp9.bgCode)} cterm=NONE
-hi CursorLineNr     ctermfg=${ConvCode(theme.grp9.bgCode)} ctermbg=${ConvCode(theme.grp9.fgCode)} cterm=NONE
+hi CursorLine       ${Config(256, theme.grp9.bgCode)}
+hi CursorLineNr     ${Config(theme.grp9.bgCode, theme.grp9.fgCode)}
 " grp10
-hi Pmenu            ctermfg=${ConvCode(theme.grp10.fgCode)} ctermbg=${ConvCode(theme.grp10.bgCode)} cterm=NONE
-hi PmenuSbar        ctermfg=${ConvCode(theme.grp10.fgCode)} ctermbg=${ConvCode(theme.grp10.bgCode)} cterm=NONE
-hi StatusLine       ctermfg=${ConvCode(theme.grp10.fgCode)} ctermbg=${ConvCode(theme.grp10.bgCode)} cterm=NONE
-hi StatusLineTerm   ctermfg=${ConvCode(theme.grp10.fgCode)} ctermbg=${ConvCode(theme.grp10.bgCode)} cterm=NONE
-hi TablineSel       ctermfg=${ConvCode(theme.grp10.fgCode)} ctermbg=${ConvCode(theme.grp10.bgCode)} cterm=NONE
-hi Visual           ctermfg=${ConvCode(theme.grp10.fgCode)} ctermbg=${ConvCode(theme.grp10.bgCode)} cterm=NONE
+hi Pmenu            ${Config(theme.grp10.fgCode, theme.grp10.bgCode)}
+hi PmenuSbar        ${Config(theme.grp10.fgCode, theme.grp10.bgCode)}
+hi StatusLine       ${Config(theme.grp10.fgCode, theme.grp10.bgCode)}
+hi StatusLineTerm   ${Config(theme.grp10.fgCode, theme.grp10.bgCode)}
+hi TablineSel       ${Config(theme.grp10.fgCode, theme.grp10.bgCode)}
+hi Visual           ${Config(theme.grp10.fgCode, theme.grp10.bgCode)}
 " grp11
-hi PmenuThumb       ctermfg=${ConvCode(theme.grp11.fgCode)} ctermbg=${ConvCode(theme.grp11.bgCode)} cterm=NONE
-hi PmenuSel         ctermfg=${ConvCode(theme.grp11.fgCode)} ctermbg=${ConvCode(theme.grp11.bgCode)} cterm=NONE
-hi StatusLineNC     ctermfg=${ConvCode(theme.grp11.fgCode)} ctermbg=${ConvCode(theme.grp11.bgCode)} cterm=NONE
-hi StatusLineTermNC ctermfg=${ConvCode(theme.grp11.fgCode)} ctermbg=${ConvCode(theme.grp11.bgCode)} cterm=NONE
-hi Tabline          ctermfg=${ConvCode(theme.grp11.fgCode)} ctermbg=${ConvCode(theme.grp11.bgCode)} cterm=NONE
+hi PmenuThumb       ${Config(theme.grp11.fgCode, theme.grp11.bgCode)}
+hi PmenuSel         ${Config(theme.grp11.fgCode, theme.grp11.bgCode)}
+hi StatusLineNC     ${Config(theme.grp11.fgCode, theme.grp11.bgCode)}
+hi StatusLineTermNC ${Config(theme.grp11.fgCode, theme.grp11.bgCode)}
+hi Tabline          ${Config(theme.grp11.fgCode, theme.grp11.bgCode)}
 " grp12
-hi Error            ctermfg=${ConvCode(theme.grp12.fgCode)} ctermbg=${ConvCode(theme.grp12.bgCode)} cterm=NONE
-hi ErrorMsg         ctermfg=${ConvCode(theme.grp12.fgCode)} ctermbg=${ConvCode(theme.grp12.bgCode)} cterm=NONE
-hi DiffDelete       ctermfg=${ConvCode(theme.grp12.fgCode)} ctermbg=${ConvCode(theme.grp12.bgCode)} cterm=NONE
+hi Error            ${Config(theme.grp12.fgCode, theme.grp12.bgCode)}
+hi ErrorMsg         ${Config(theme.grp12.fgCode, theme.grp12.bgCode)}
+hi DiffDelete       ${Config(theme.grp12.fgCode, theme.grp12.bgCode)}
 " grp13
-hi Search           ctermfg=${ConvCode(theme.grp13.fgCode)} ctermbg=${ConvCode(theme.grp13.bgCode)} cterm=NONE
-hi DiffAdd          ctermfg=${ConvCode(theme.grp13.fgCode)} ctermbg=${ConvCode(theme.grp13.bgCode)} cterm=NONE
-hi DiffChange       ctermfg=${ConvCode(theme.grp13.fgCode)} ctermbg=${ConvCode(theme.grp13.bgCode)} cterm=NONE
+hi Search           ${Config(theme.grp13.fgCode, theme.grp13.bgCode)}
+hi DiffAdd          ${Config(theme.grp13.fgCode, theme.grp13.bgCode)}
+hi DiffChange       ${Config(theme.grp13.fgCode, theme.grp13.bgCode)}
 
-hi IncSearch        ctermfg=${ConvCode(theme.grp13.bgCode)} ctermbg=${ConvCode(theme.grp13.fgCode)} cterm=NONE
-hi MatchParen       ctermfg=${ConvCode(theme.grp13.bgCode)} ctermbg=${ConvCode(theme.grp13.fgCode)} cterm=NONE
+hi IncSearch        ${Config(theme.grp13.bgCode, theme.grp13.fgCode)}
+hi MatchPare        ${Config(theme.grp13.bgCode, theme.grp13.fgCode)}
 `
 )
 
