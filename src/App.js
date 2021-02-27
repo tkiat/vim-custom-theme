@@ -1,5 +1,6 @@
 import {Component} from 'react'
 
+import './App.scss'
 import ColorGroup from './ColorGroup.js'
 import ColorTemplate from './VimColorTemplate.js'
 import Square from './Square.js'
@@ -27,44 +28,19 @@ class App extends Component {
   displaySampleCode = (sample, autofillLineNr = true) => {
     let curLineNr = 0
     const lastLineNr = Number(Object.keys(sample[sample.length - 1])[0])
-    const numDigit = (lastLineNr + '').length
     return <pre className='sample-code'>{
       sample.map(line => {
         const lineNr = Number(Object.keys(line)[0])
         const seq = Object.values(line)[0]
-        let newlines = []
-        while(curLineNr < lineNr) {
-          newlines.push(<br key={'br' + curLineNr} />)
-          if (autofillLineNr) {
-            let lineNumberText = '~'
-            if (curLineNr >= lastLineNr - 2) lineNumberText = ''
-            else if (curLineNr === lineNr - 1) lineNumberText = this.insertLineNumberSpaces(curLineNr + 1, numDigit)
-            newlines.push(this.displayLineNumber(lineNumberText, 'lineNr' + curLineNr, seq.filter(x => x[0] === 'Cursor').length))
-          }
-          curLineNr++
-        }
+        const isCursorOnThisLine = seq.filter(x => x[0] === 'Cursor').length
+        let newlines = this.getSampleCodeNewlines(curLineNr, lineNr, lastLineNr, autofillLineNr, isCursorOnThisLine)
+        curLineNr = lineNr
         return [
           newlines,
-          this.displaySampleCodeOneLine(seq)
+          this.getSampleCodeOneLine(seq)
         ]
       })
     }</pre>
-  }
-
-  // draw text with highlights. Arguments: [pair1, pair2, ...]
-  // A pair is [<highlight group number, append r for reverse highlighting>, <text>, <(optional) another group number, alternate background>]
-  displaySampleCodeOneLine = (seq) => {
-    return [
-      seq.map((pair, i) => {
-        let {bgCode, fgCode} = this.state['grp' + (typeof pair[0] === 'string' ? pair[0] : Math.abs(pair[0]))]
-        if (pair[0] < 0) { let temp = bgCode; bgCode = fgCode; fgCode = temp }
-        bgCode = pair[2] ? this.state['grp' + pair[2]].bgCode : bgCode
-        return <code key={i} style={{"backgroundColor": getHighlightColor(bgCode), "color": getHighlightColor(fgCode)}}>{pair[1]}</code>
-    })
-  ]}
-
-  getBlankSquare = () => {
-    return <Square backgroundcolor={'#fff'} fontcolor={'#fff'} value='x' borderDisable={true} />
   }
 
   getPaletteSquares = (from, to = from + 17) => {
@@ -73,7 +49,33 @@ class App extends Component {
     })
   }
 
-  insertLineNumberSpaces = (num, numDigit) => (' ' + String(num).padStart(numDigit, ' ') + ' ')
+  getSampleCodeNewlines = (curLineNr, lineNr, lastLineNr, autofillLineNr, isCursorOnThisLine) => {
+    let newlines = []
+    const numDigit = (lastLineNr + '').length
+    while(curLineNr < lineNr) {
+      newlines.push(<br key={'br' + curLineNr} />)
+      if (autofillLineNr) {
+        let lineNumberText = '~'
+        if (curLineNr >= lastLineNr - 2) lineNumberText = ''
+        else if (curLineNr === lineNr - 1) lineNumberText = ' ' + String(curLineNr + 1).padStart(numDigit, ' ') + ' '
+        newlines.push(this.displayLineNumber(lineNumberText, 'lineNr' + curLineNr, isCursorOnThisLine))
+      }
+      curLineNr++
+    }
+    return newlines
+  }
+
+  // draw text with highlights. Arguments: [pair1, pair2, ...]
+  // A pair is [<highlight group number, append r for reverse highlighting>, <text>, <(optional) another group number, alternate background>]
+  getSampleCodeOneLine = (seq) => {
+    return [
+      seq.map((pair, i) => {
+        let {bgCode, fgCode} = this.state['grp' + (typeof pair[0] === 'string' ? pair[0] : Math.abs(pair[0]))]
+        if (pair[0] < 0) { let temp = bgCode; bgCode = fgCode; fgCode = temp }
+        bgCode = pair[2] ? this.state['grp' + pair[2]].bgCode : bgCode
+        return <code key={i} style={{"backgroundColor": getHighlightColor(bgCode), "color": getHighlightColor(fgCode)}}>{pair[1]}</code>
+    })
+  ]}
 
   setColor = (group, fgCode, bgCode) => {
     this.setState({
@@ -162,7 +164,6 @@ class App extends Component {
           <div>{this.getPaletteSquares(196, 231)}{this.getPaletteSquares(13, 13)}</div>
           <div>{this.getPaletteSquares(232, 255)}{this.getPaletteSquares(0, 12)}</div>
         </div>
-
       </div>
     )
   }
