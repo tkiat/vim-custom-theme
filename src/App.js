@@ -135,10 +135,10 @@ class App extends Component {
             {this.displaySampleCode(samples[this.state.activeSample], this.state.activeSample === 'diff_error' ? false : true)}
           </div>
 
-          <div className='sample-settings'>
+          <div className='sample-select'>
             {
               ['pmenu','nerdtree_visual','fold_search','diff_error'].map((x, i) => {
-                return <button key={i} className={'sample-settings__button' + (this.state.activeSample === x ? ' sample-settings__button--active' : '')} onClick={() => this.setState({activeSample: x})}>{['Pmenu','NERDTree & Visual', 'Fold & Search', 'Diff & Error'][i]}</button>
+                return <button key={i} className={'sample-select__button' + (this.state.activeSample === x ? ' sample-select__button--active' : '')} onClick={() => this.setState({activeSample: x})}>{['Pmenu','NERDTree & Visual', 'Fold & Search', 'Diff & Error'][i]}</button>
               })
             }
           </div>
@@ -150,7 +150,7 @@ class App extends Component {
           <p className='logo__content'>A simple, opinionated tool to generate</p>
           <p className='logo__content'>a custom theme with real-time changes.</p>
           <p className='logo__content'>Currently support only 256 colors.</p>
-          <p className='logo__footer' style={{'color': 'blue'}}><a href="https://reactjs.org/"><b>Made with React.js</b></a></p>
+          <p className='logo__footer'><a href="https://reactjs.org/"><b>Made with React.js</b></a></p>
         </div>
 
         <div className='palette'>

@@ -8,7 +8,7 @@ export const groups = [
   {grp7: ['Identifier', 'Preproc']},
   {grp8: ['ModeMsg', 'Normal', 'Question', 'TabLineFill', 'Title']},
   {grp9: ['CursorLine **', 'CursorLineNr *', 'Folded', 'FoldColumn']},
-  {grp10: ["Pmenu", "PmenuSbar", "StatusLine", "StatusLineTerm", "TablineSel", "Visual"]},
+  {grp10: ["Pmenu", "PmenuSbar", "StatusLine", "StatusLineTerm", "TabLineSel", "Visual"]},
   {grp11: ["PmenuThumb", "PmenuSel", "StatusLineNC", "StatusLineTermNC", "TabLine"]},
   {grp12: ["DiffDelete", "Error", "ErrorMsg"]},
   {grp13: ["DiffAdd", "DiffChange", "IncSearch *", "MatchParen *", "Search"]},

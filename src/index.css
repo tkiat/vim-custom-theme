@@ -6,29 +6,44 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /*overflow: auto;*/
-  /*white-space: nowrap;*/
   margin: 0;
-/*  display: flex;*/
-/*  justify-content: space-between;*/
-/*  flex-direction: column;*/
 }
 
-#root {
-  min-width: 1200px;
-}
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.container {
+  position: relative;
+  min-width: 1200px;
+  max-width: 1400px;
+  height: 710px;
+  border: 3px solid grey;
+}
+
+.logo {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  text-align: right;
+  z-index: -2;
+}
+.logo__title {
+  font-size: 20px;
+}
+.logo__content {
+  font-size: 16px;
+  line-height: 8px;
+}
+.logo__footer {
+  color: blue;
+  margin-bottom: 0;
+}
+
 .palette {
-  height: 50px;
-  display: inline-block;
-  /*float: left;*/
-/*  position: absolute;*/
-/*  left: 0px;*/
-/*  bottom: 0px;*/
-  text-align: left;
+  position: absolute;
+  bottom: 0; left: 0;
   z-index: -1;
   pointer-events: none;
 }
@@ -47,15 +62,49 @@ code {
   border: none;
 }
 
+.sample {
+  display: inline-block;
+  text-align: right;
+  float: right;
+  width: 694px;
+}
+.sample-code {
+  text-align: left;
+  font-size: 16px;
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  vertical-align: top;
+}
+.sample-select {
+  margin-top: 3px;
+  text-align: left;
+}
+.sample-select__button {
+  border: 1px solid black;
+  cursor: pointer;
+  font-size: 14px;
+  margin-right: 1px;
+  padding: 8px;
+  background: #dadada;
+  color: black;
+}
+.sample-select__button--active {
+  background: #444;
+  color: white;
+}
+
 .settings {
   display: inline-block;
-  /*width: 450px;*/
   width: calc(100% - 700px);
   border-spacing: 0;
   white-space: normal;
 }
 .settings__download {
   margin-left: 10px;
+}
+.settings__filename {
+  text-align: right;
 }
 .settings__input {
   text-align: center;
@@ -65,58 +114,6 @@ code {
 .settings__row:nth-child(even) > .settings__dscp {
   background-color: #dddddd;
 }
-.settings__filename {
-  text-align: right;
-}
 .settings__theme {
   margin-right: 10px;
-}
-
-.logo {
-  display: inline-block;
-  float: right;
-  margin-right: 20px;
-  text-align: right;
-  z-index: -2;
-}
-.logo__title {
-  font-size: 20px;
-}
-.logo__content {
-  font-size: 16px;
-  line-height: 8px;
-}
-
-.sample {
-  display: inline-block;
-  text-align: right;
-  float: right;
-  width: 694px;
-}
-
-.sample-code {
-  text-align: left;
-  font-size: 16px;
-  display: inline-block;
-  margin: 0;
-  padding: 0;
-  vertical-align: top;
-}
-
-.sample-settings {
-  margin-top: 3px;
-  text-align: left;
-}
-.sample-settings__button {
-  border: 1px solid black;
-  cursor: pointer;
-  font-size: 14px;
-  margin-right: 1px;
-  padding: 8px;
-  background: #dadada;
-  color: black;
-}
-.sample-settings__button--active {
-  background: #444;
-  color: white;
 }

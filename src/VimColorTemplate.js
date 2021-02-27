@@ -53,14 +53,14 @@ hi Pmenu            ${Config(theme.grp10.fgCode, theme.grp10.bgCode)}
 hi PmenuSbar        ${Config(theme.grp10.fgCode, theme.grp10.bgCode)}
 hi StatusLine       ${Config(theme.grp10.fgCode, theme.grp10.bgCode)}
 hi StatusLineTerm   ${Config(theme.grp10.fgCode, theme.grp10.bgCode)}
-hi TablineSel       ${Config(theme.grp10.fgCode, theme.grp10.bgCode)}
+hi TabLineSel       ${Config(theme.grp10.fgCode, theme.grp10.bgCode)}
 hi Visual           ${Config(theme.grp10.fgCode, theme.grp10.bgCode)}
 " grp11
 hi PmenuThumb       ${Config(theme.grp11.fgCode, theme.grp11.bgCode)}
 hi PmenuSel         ${Config(theme.grp11.fgCode, theme.grp11.bgCode)}
 hi StatusLineNC     ${Config(theme.grp11.fgCode, theme.grp11.bgCode)}
 hi StatusLineTermNC ${Config(theme.grp11.fgCode, theme.grp11.bgCode)}
-hi Tabline          ${Config(theme.grp11.fgCode, theme.grp11.bgCode)}
+hi TabLine          ${Config(theme.grp11.fgCode, theme.grp11.bgCode)}
 " grp12
 hi Error            ${Config(theme.grp12.fgCode, theme.grp12.bgCode)}
 hi ErrorMsg         ${Config(theme.grp12.fgCode, theme.grp12.bgCode)}
@@ -71,7 +71,7 @@ hi DiffAdd          ${Config(theme.grp13.fgCode, theme.grp13.bgCode)}
 hi DiffChange       ${Config(theme.grp13.fgCode, theme.grp13.bgCode)}
 
 hi IncSearch        ${Config(theme.grp13.bgCode, theme.grp13.fgCode)}
-hi MatchPare        ${Config(theme.grp13.bgCode, theme.grp13.fgCode)}
+hi MatchParen       ${Config(theme.grp13.bgCode, theme.grp13.fgCode)}
 `
 )
 
