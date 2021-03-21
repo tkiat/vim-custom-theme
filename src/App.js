@@ -43,9 +43,9 @@ class App extends Component {
     }</pre>
   }
 
-  getPaletteSquares = (from, to = from + 17) => {
-    return Array(to - from + 1).fill(0).map((_, i) => {
-        return <Square key={"square-" + from + i} backgroundcolor={getHighlightColor(from + i)} fontcolor={getLabelColor(from + i)} value={from + i} borderDisable={false} />
+  getPaletteSquares = (from, to) => {
+    return Array.from(Array(to - from + 1).keys(), x => x + from).map(num => {
+      return <Square key={"square-" + num} backgroundcolor={getHighlightColor(num)} fontcolor={getLabelColor(num)} value={num} borderDisable={false} />
     })
   }
 
